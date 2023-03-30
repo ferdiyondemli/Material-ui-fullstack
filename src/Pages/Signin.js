@@ -9,25 +9,45 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Box from '@material-ui/core/Box';
+import axios from "axios";
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/Alert';
+import { useNavigate } from "react-router-dom";
 
 const Signin = ({}) => {
+    let navigate = useNavigate();
 
     const value = useContext(Context);
     const paperStyle = {padding: 20, height: '53vh', width: 300, margin: "0 auto"}
     const avatarStyle = {backgroundColor: '#1bbd7e'}
     const btnstyle = {marginTop: '8px'}
-    const [name, setName] = React.useState();
-    const [password, setPassword] = React.useState();
+    const [name, setName] = React.useState('');
+    const [password, setPassword] = React.useState('');
     const [role, setRole] = React.useState('');
     const [validation, setValidation] = useState({})
     const handleChange = (event) => {
         setRole(event.target.value);
     };
+    const fetchData = async () => {
 
 
+        axios.post("http://localhost:8088/users/giris", {
+            kullaniciAdi: name,
+            password: password
+        })
+            .then((response) => {
+                console.log(response.data);
+                value.setUser(response.data)
+                navigate("/home");
+
+
+            });
+
+
+
+    };
+    console.log(value.user);
     return (<Grid>
         <Paper style={paperStyle}>
             <Grid align='center'>
@@ -40,7 +60,7 @@ const Signin = ({}) => {
                        required
                        value={name}
                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                           if (event.target.value.length < 5) {
+                           if (event.target.value.length < 4) {
                                setValidation({
                                    ...validation, kullaniciAdi: "Kullanıcı Adı: Geçerli bir kullanıcı adı giriniz!"
                                })
@@ -90,11 +110,9 @@ const Signin = ({}) => {
                 </Button>}
 
             <Button color='primary' variant="contained" style={btnstyle} fullWidth onClick={() => {
+                fetchData()
 
-
-                value.setUser({
-                    ad: name, password: password, role: role
-                })
+                console.log("giris yapıldı");
             }}
 
                     style={{textTransform: "none", marginTop: "10px"}}

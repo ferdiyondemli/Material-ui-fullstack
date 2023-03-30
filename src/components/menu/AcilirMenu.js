@@ -69,7 +69,8 @@ export default function AcilirMenu({children}) {
         setOpen(false);
     };
     const value = useContext(Context);
-    console.log(value);
+
+
     return (<div className={classes.root}>
         <CssBaseline/>
         <AppBar

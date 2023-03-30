@@ -20,7 +20,7 @@ import {useState, useMemo} from "react"
 
         <Routes>
 
-            <Route path="*" element={ value?.user.ad?<Home/>: <Navigate to="/signin" replace={true} />}            />
+            <Route path="*" element={ value?.user?.kullaniciAdi?<Home/>: <Navigate to="/signin" replace={true} />}            />
 
 
         </Routes>

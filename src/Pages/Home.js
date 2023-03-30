@@ -12,7 +12,7 @@ const Home=()=>{
     const value = useContext(Context);
     return <>
 
-        Hello {  value?.user.ad}
+        Hello {  value?.user.kullaniciAdi}
 
         <Box>
              <Button variant="contained"  onClick={

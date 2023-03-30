@@ -21,20 +21,19 @@ const theme = createTheme(
 const App = () => {
 
     const [user, setUser] = useState({})
-    const value = useMemo(() => ({user, setUser}), [user?.ad]);
+    const value = {user, setUser}
 
-    console.log(user?.ad);
-    return (<>
+     return (<>
         <ThemeProvider theme={theme}>
 
         <Context.Provider value={value} >
 
                         <Routes>
 
-                            <Route path="/signup" element={user?.ad ?  <Navigate to="/home" replace={true} />:<Signup/>}/>
-                            <Route path="/signin" element={user?.ad ?<Navigate to="/home" replace={true} />:<Signin/>}/>
+                            <Route path="/signup" element={user?.kullaniciAdi ?  <Navigate to="/home" replace={true} />:<Signup/>}/>
+                            <Route path="/signin" element={user?.kullaniciAdi ?<Navigate to="/home" replace={true} />:<Signin/>}/>
 
-                            <Route path="*" element={user?.ad ?<Routelar/>:<Navigate to="/signin" replace={true} />}/>
+                            <Route path="*" element={user?.kullaniciAdi ?<Routelar/>:<Navigate to="/signin" replace={true} />}/>
 
 
                         </Routes>
