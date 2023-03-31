@@ -4,23 +4,18 @@ const menu=  [
             path:"/home",
             label:"Ana Sayfa",
             role:"user"
-        },
+        } ,
         {
             icon:"jnlkj",
-            path:"/login",
-            label:"Giriş",
-            role:"admin"
-        },
-        {
-            icon:"jnlkj",
-            path:"/signup",
-            label:"Kayıt ol",
+            path: "/settings",
+            label:"settings",
             role:"user"
-        },
+        }
+,
         {
             icon:"jnlkj",
-            path:"/ferdi",
-            label:"ferdi",
+            path: "/bildirimler",
+            label:"bildirimler",
             role:"user"
         }
 

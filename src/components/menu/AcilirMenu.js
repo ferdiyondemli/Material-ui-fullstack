@@ -14,7 +14,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Menu from "../Menu"
+import Menu from "../../Menu"
 import {Navigate} from "react-router-dom";
 import {Link} from "react-router-dom";
 import {Context} from '../../context/Context';
@@ -92,6 +92,8 @@ export default function AcilirMenu({children}) {
                 <Typography variant="h6" noWrap>
                     Yalo Baba
                 </Typography>
+
+
             </Toolbar>
         </AppBar>
          <Drawer

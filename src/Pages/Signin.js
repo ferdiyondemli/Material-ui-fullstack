@@ -14,35 +14,39 @@ import axios from "axios";
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/Alert';
 import { useNavigate } from "react-router-dom";
+import {useSnackbar} from "notistack";
 
 const Signin = ({}) => {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
+    const {enqueueSnackbar} = useSnackbar();
 
     const value = useContext(Context);
     const paperStyle = {padding: 20, height: '53vh', width: 300, margin: "0 auto"}
     const avatarStyle = {backgroundColor: '#1bbd7e'}
     const btnstyle = {marginTop: '8px'}
-    const [name, setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [role, setRole] = React.useState('');
     const [validation, setValidation] = useState({})
-    const handleChange = (event) => {
-        setRole(event.target.value);
-    };
+
     const fetchData = async () => {
 
 
         axios.post("http://localhost:8088/users/giris", {
-            kullaniciAdi: name,
+            email: email,
             password: password
-        })
-            .then((response) => {
-                console.log(response.data);
+        }).then((response) => {
+            if(response?.data){
                 value.setUser(response.data)
                 navigate("/home");
+                enqueueSnackbar("Giriş başarılı")
+            }else{
+                enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz.")
+            }
 
+        }).catch((e) => {
+            enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz.")
 
-            });
+        });
 
 
 
@@ -56,19 +60,19 @@ const Signin = ({}) => {
                 <h2>Giriş yap</h2>
             </Grid>
 
-            <TextField style={{marginTop: "10px"}} label='Kullanıcı adı' placeholder='Kullanıcı adı giriniz.' fullWidth
+            <TextField style={{marginTop: "10px"}} label='Email' placeholder='Email adresinizi giriniz.' fullWidth
                        required
-                       value={name}
-                       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                       value={email}
+                       onChange={(event) => {
                            if (event.target.value.length < 4) {
                                setValidation({
-                                   ...validation, kullaniciAdi: "Kullanıcı Adı: Geçerli bir kullanıcı adı giriniz!"
+                                   ...validation, email: "email: Geçerli bir email adresi giriniz!"
                                })
-                               setName(event.target.value);
+                               setEmail(event.target.value);
 
                            } else {
-                               delete validation.kullaniciAdi
-                               setName(event.target.value);
+                               delete validation.email
+                               setEmail(event.target.value);
                            }
 
 
@@ -77,7 +81,7 @@ const Signin = ({}) => {
             <TextField style={{marginTop: "10px"}} label='Şifre' placeholder='Şifre giriniz.' type='password' fullWidth
                        required
                        value={password}
-                       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                       onChange={(event) => {
                            if (event.target.value.length < 3) {
                                setValidation({
                                    ...validation, sifre: "Şifre: Geçerli bir şifre giriniz!"
@@ -91,19 +95,7 @@ const Signin = ({}) => {
 
                        }}/>
 
-            <FormControl fullWidth size="small" style={{marginTop: "10px"}}>
-                <InputLabel id="demo-simple-select-label">Role Seçiniz</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={role}
-                    label="Role Seçiniz"
-                    onChange={handleChange}
-                > <MenuItem value={"admin"}>admin</MenuItem>
-                    <MenuItem value={"user"}>user</MenuItem>
-                </Select>
-            </FormControl>
-            {(!name || !password || !role) > 0 &&
+            {(!email || !password ) > 0 &&
                 <Button size={"small"} style={{textTransform: "none"}}
                         fullWidth color={"secondary"}>
                     Bilgilerinizi giriniz.
@@ -112,11 +104,10 @@ const Signin = ({}) => {
             <Button color='primary' variant="contained" style={btnstyle} fullWidth onClick={() => {
                 fetchData()
 
-                console.log("giris yapıldı");
             }}
 
                     style={{textTransform: "none", marginTop: "10px"}}
-                    disabled={Object.keys(validation).length > 0 || !name || !password || !role}>GİRİŞ YAP</Button>
+                    disabled={Object.keys(validation).length > 0 || !email || !password }>GİRİŞ YAP</Button>
             <Typography style={{marginTop: "10px"}}>
                 <Link href="/forgotpassword">
                     Şifremi unuttum.
