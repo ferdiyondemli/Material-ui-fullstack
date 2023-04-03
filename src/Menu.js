@@ -1,21 +1,21 @@
 const menu=  [
         {
-            icon:"jnlkj",
+            icon:"fa fa-home",
             path:"/home",
-            label:"Ana Sayfa",
+            label:" Ana Sayfa",
             role:"user"
         } ,
         {
-            icon:"jnlkj",
+            icon:"fa fa-cog",
             path: "/settings",
-            label:"settings",
+            label:" Settings",
             role:"user"
         }
 ,
         {
-            icon:"jnlkj",
+            icon:"fa fa-bell",
             path: "/bildirimler",
-            label:"bildirimler",
+            label:" Bildirimler",
             role:"user"
         }
 

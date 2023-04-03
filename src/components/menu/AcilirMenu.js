@@ -15,11 +15,16 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from "../../Menu"
-import {Navigate} from "react-router-dom";
-import {Link} from "react-router-dom";
-import {Context} from '../../context/Context';
+import {Navigate, useNavigate} from "react-router-dom";
+ import {Context} from '../../context/Context';
+import Avatar from '@material-ui/core/Avatar';
+import {deepOrange, deepPurple} from '@material-ui/core/colors';
+import {Switch,Link} from '@material-ui/core';
 
 const drawerWidth = 240;
+import MenuUi from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import {useSnackbar} from "notistack";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,10 +62,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AcilirMenu({children}) {
+    let navigate = useNavigate();
+    const {enqueueSnackbar} = useSnackbar();
+
+
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -92,11 +109,36 @@ export default function AcilirMenu({children}) {
                 <Typography variant="h6" noWrap>
                     Yalo Baba
                 </Typography>
+                <Switch onChange={() => value.setMode(value.mode === "light" ? "dark" : "light")} />
 
-
+                <Avatar style={{backgroundColor: "grey", position: "absolute", right: "50px"}}
+                        aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}
+                >{value.user.kullaniciAdi}</Avatar>
+                <MenuUi
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                >
+                    <MenuItem onClick={() => {
+                        handleClose()
+                        navigate("/account");
+                    }}>Hesabım</MenuItem>
+                    <MenuItem onClick={() => {
+                        handleClose()
+                        navigate("/settings");
+                    }}>Ayarlar</MenuItem>
+                    <MenuItem onClick={() => {
+                        handleClose()
+                        value.setUser({})
+                        navigate("/home");
+                        enqueueSnackbar("Çıkış yapıldı.")
+                    }}>Çıkış yap</MenuItem>
+                </MenuUi>
             </Toolbar>
         </AppBar>
-         <Drawer
+        <Drawer
             className={classes.drawer}
             variant="persistent"
             anchor="left"
@@ -105,24 +147,32 @@ export default function AcilirMenu({children}) {
                 paper: classes.drawerPaper,
             }}
         >
-             LOGO
 
-            <div className={classes.drawerHeader}>
-                <IconButton onClick={handleDrawerClose}>
-                    {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
-                </IconButton>
-            </div>
+                <div style={{  margin:"0 0 0 10px" }} className={classes.drawerHeader}>
+
+                    <IconButton    onClick={handleDrawerClose}>
+{/*
+                        <img style={{width:"170px", backgroundColor:"grey",  borderRadius:"5px" }} src={"https://www.yildirimlargiyim.com.tr/UserFiles/Fotograflar/2593-untitled-2-png-untitled-2.png"}/>
+*/}
+
+                        {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+                    </IconButton>
+                </div>
+
             <Divider/>
-            <List>
-                {Menu.map((el, index) => (
+            <List >
+                {Menu.map((el, index) => (<Link className={"ali"} style={{textDecoration: "none",
 
-                    <Link hidden={!(value.user.role === "admin") && !(value.user.role === el.role)} to={el.path}
-                          key={index}> <ListItem button key={index} href="/sd">
-
-
-                        <ListItemText primary={el.label}/>
-                    </ListItem>
-                    </Link>))}
+                    ".ali:hover": {color: "red"}
+                    // Todo inline css
+                }}
+                                                hidden={!(value.user.role === "admin") && !(value.user.role === el.role)}
+                                                to={el.path}
+                                                key={index}> <ListItem button key={index} href="/sd">
+                    <i className={el.icon}></i>
+                  <ListItemText  primary={el.label}/>
+                </ListItem>
+                </Link>))}
             </List>
 
 

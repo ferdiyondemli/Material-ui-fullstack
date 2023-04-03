@@ -13,21 +13,48 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
         as coreBgBG } from '@material-ui/core/locale';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
-const theme = createTheme(
+const darkTheme = createTheme(
     {
+        palette: {
+            type: "dark",
+            background: {
+                default: "hsl(230, 17%, 14%)"
+            }
+        }
 
     },
     coreBgBG,
+
+);const lightTheme = createTheme(
+    {
+        palette: {
+            type: "light",
+            background: {
+                default: "hsl(0, 0%, 100%)"
+            }
+
+        }
+
+    },
+    coreBgBG,
+
 );
 const App = () => {
 
-    const [user, setUser] = useState({})
-    const value = {user, setUser}
+    const [user, setUser] = useState({id: 7, kullaniciAdi: "12313", email: "yoloo", password: "12345", role: "user"}
+    )
+
+
+
+    const [mode, setMode] = useState("light");
+    const selectedTheme = mode === "dark" ? darkTheme : lightTheme;
+
+    const value = {user, setUser, mode, setMode }
 
      return (<>
          <SnackbarProvider>
 
-         <ThemeProvider theme={theme}>
+         <ThemeProvider theme={selectedTheme}>
 
         <Context.Provider value={value} >
 

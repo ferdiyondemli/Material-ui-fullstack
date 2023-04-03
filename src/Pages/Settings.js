@@ -1,4 +1,4 @@
-import Box from "@material-ui/core/Box";
+import {Box,Paper} from "@material-ui/core";
 
 const Home=()=>{
 
@@ -6,10 +6,10 @@ const Home=()=>{
     return <>
 
 
-        <Box>
+        <Paper>
              Settings
 
-        </Box>
+        </Paper>
 
     </>
  }
