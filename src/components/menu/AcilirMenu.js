@@ -15,11 +15,11 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from "../../Menu"
-import {Navigate, useNavigate} from "react-router-dom";
+import {Navigate, useNavigate,Link} from "react-router-dom";
  import {Context} from '../../context/Context';
 import Avatar from '@material-ui/core/Avatar';
 import {deepOrange, deepPurple} from '@material-ui/core/colors';
-import {Switch,Link} from '@material-ui/core';
+import {Switch} from '@material-ui/core';
 
 const drawerWidth = 240;
 import MenuUi from '@material-ui/core/Menu';
@@ -109,7 +109,7 @@ export default function AcilirMenu({children}) {
                 <Typography variant="h6" noWrap>
                     Yalo Baba
                 </Typography>
-                <Switch onChange={() => value.setMode(value.mode === "light" ? "dark" : "light")} />
+                <Switch color={"info"} onChange={() => value.setMode(value.mode === "light" ? "dark" : "light")} />
 
                 <Avatar style={{backgroundColor: "grey", position: "absolute", right: "50px"}}
                         aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}
@@ -163,7 +163,7 @@ export default function AcilirMenu({children}) {
             <List >
                 {Menu.map((el, index) => (<Link className={"ali"} style={{textDecoration: "none",
 
-                    ".ali:hover": {color: "red"}
+                    ...(theme.palette.type=="light"? {color: "#3f51b5"}:{color: "white"})
                     // Todo inline css
                 }}
                                                 hidden={!(value.user.role === "admin") && !(value.user.role === el.role)}

@@ -69,7 +69,7 @@ const App = () => {
                         </Routes>
 
             </Context.Provider>
-        </ThemeProvider>;
+        </ThemeProvider>
          </SnackbarProvider>
 
         </>
