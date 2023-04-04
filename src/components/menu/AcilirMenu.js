@@ -113,7 +113,7 @@ export default function AcilirMenu({children}) {
 
                 <Avatar style={{backgroundColor: "grey", position: "absolute", right: "50px"}}
                         aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}
-                >{value.user.kullaniciAdi}</Avatar>
+                >{value.user.kullaniciAdi.charAt(0).toUpperCase()}</Avatar>
                 <MenuUi
                     id="simple-menu"
                     anchorEl={anchorEl}

@@ -18,6 +18,13 @@ const menu=  [
             label:" Bildirimler",
             role:"user"
         }
+,
+        {
+            icon:"fa fa-user",
+            path: "/account",
+            label:" Hesabım",
+            role:"user"
+        }
 
     ]
  

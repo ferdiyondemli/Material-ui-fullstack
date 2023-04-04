@@ -11,17 +11,9 @@ const Home=()=>{
     const value = useContext(Context);
     return <>
 
-        Hello {  value?.user.kullaniciAdi}
+        Hoşgeldin {  value?.user.kullaniciAdi}
 
-        <Box>
-             <Button variant="contained"  onClick={
-                ()=> {
-                    value.setUser({})
-                    navigate("/home");
-                }
-            }>Çıkış yap</Button>
 
-        </Box>
 
     </>
  }

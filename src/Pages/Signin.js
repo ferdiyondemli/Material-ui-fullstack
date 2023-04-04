@@ -13,7 +13,7 @@ import axios from "axios";
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/Alert';
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useSnackbar} from "notistack";
 
 const Signin = ({}) => {
@@ -32,22 +32,22 @@ const Signin = ({}) => {
 
 
         axios.post("http://localhost:8088/users/giris", {
-            email: email,
-            password: password
+            email: email, password: password
         }).then((response) => {
-            if(response?.data){
+            console.log(response);
+            if (response?.data) {
                 value.setUser(response.data)
                 navigate("/home");
                 enqueueSnackbar("Giriş başarılı")
-            }else{
-                enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz.")
+            } else {
+                enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz. ")
             }
-
         }).catch((e) => {
-            enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz.")
+            console.log(e)
+            console.trace()
+            enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz. ")
 
         });
-
 
 
     };
@@ -81,6 +81,8 @@ const Signin = ({}) => {
             <TextField style={{marginTop: "10px"}} label='Şifre' placeholder='Şifre giriniz.' type='password' fullWidth
                        required
                        value={password}
+                       type={"password"}
+
                        onChange={(event) => {
                            if (event.target.value.length < 3) {
                                setValidation({
@@ -95,11 +97,10 @@ const Signin = ({}) => {
 
                        }}/>
 
-            {(!email || !password ) > 0 &&
-                <Button size={"small"} style={{textTransform: "none"}}
-                        fullWidth color={"secondary"}>
-                    Bilgilerinizi giriniz.
-                </Button>}
+            {(!email || !password) > 0 && <Button size={"small"} style={{textTransform: "none"}}
+                                                  fullWidth color={"secondary"}>
+                Bilgilerinizi giriniz.
+            </Button>}
 
             <Button color='primary' variant="contained" style={btnstyle} fullWidth onClick={() => {
                 fetchData()
@@ -107,7 +108,7 @@ const Signin = ({}) => {
             }}
 
                     style={{textTransform: "none", marginTop: "10px"}}
-                    disabled={Object.keys(validation).length > 0 || !email || !password }>GİRİŞ YAP</Button>
+                    disabled={Object.keys(validation).length > 0 || !email || !password}>GİRİŞ YAP</Button>
             <Typography style={{marginTop: "10px"}}>
                 <Link href="/forgotpassword">
                     Şifremi unuttum.

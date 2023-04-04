@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {Grid, Paper, Avatar, Typography, TextField, Button, Link} from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import {SnackbarProvider, useSnackbar} from 'notistack';
+import {validateEmail} from "../Utils";
 
 import FormControl from '@material-ui/core/FormControl';
 
@@ -15,7 +16,7 @@ import {useNavigate} from "react-router-dom";
 const Signup = () => {
     const {enqueueSnackbar} = useSnackbar();
 
-    const paperStyle = {padding: 20, width: 300, margin: "0 auto"}
+    const paperStyle = {padding: 20, width: "100vw", margin: "0 auto"}
     const headerStyle = {margin: 0}
     const avatarStyle = {backgroundColor: '#1bbd7e'}
 
@@ -75,8 +76,7 @@ const Signup = () => {
                 <TextField fullWidth label='E-mail adresi' placeholder="Mail adresi giriniz."
                            value={email}
                            onChange={(event) => {
-                               if (event.target.value.length < 5) {
-                                   setEmail(event.target.value);
+                               if ( !validateEmail(event.target.value)) {                                   setEmail(event.target.value);
                                    setValidation({
                                        ...validation, email: "E-mail: Geçerli bir e-mail adresi giriniz!"
                                    })
@@ -113,6 +113,8 @@ const Signup = () => {
 
                 <TextField fullWidth label='Şifre' placeholder="Şifre giriniz."
                            value={password}
+                           type={"password"}
+
                            onChange={(event) => {
                                if (event.target.value.length < 5) {
                                    setPassword(event.target.value);
@@ -136,6 +138,8 @@ const Signup = () => {
                 />
                 <TextField fullWidth label='Şifre tekrarı' placeholder="Tekrar şifre giriniz."
                            value={password2}
+                           type={"password"}
+
                            onChange={(event) => {
                                if (event.target.value.length < 5) {
                                    setPassword2(event.target.value);

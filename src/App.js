@@ -1,4 +1,4 @@
-import React, {Component, createContext, useContext} from 'react';
+import React, {Component, createContext, useContext, useEffect} from 'react';
 import AcilirMenu from "../src/components/menu/AcilirMenu"
 import Menu from "./Menu"
 import {BrowserRouter, Routes, Route, Link, Navigate} from "react-router-dom";
@@ -41,8 +41,9 @@ const darkTheme = createTheme(
 );
 const App = () => {
 
-    const [user, setUser] = useState({id: 7, kullaniciAdi: "12313", email: "yoloo", password: "12345", role: "user"}
-    )
+    const [user, setUser] = useState({ })
+    /*  const [user, setUser] = useState({id: 7, kullaniciAdi: "12313", email: "yoloo", password: "12345", role: "user"}
+    )*/
 
 
 
@@ -50,6 +51,25 @@ const App = () => {
     const selectedTheme = mode === "dark" ? darkTheme : lightTheme;
 
     const value = {user, setUser, mode, setMode }
+    console.log(setUser)
+
+    useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('yalo'));
+        if (items) {
+            setUser(prevState => items.user);
+            setMode(prevState => items.mode)
+        }
+    }, []);
+
+    useEffect(()=>{
+
+        localStorage.setItem('yalo', JSON.stringify(value));
+
+    },[user,mode])
+
+
+
+
 
      return (<>
          <SnackbarProvider>
