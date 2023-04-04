@@ -8,7 +8,7 @@ import Signin from "../../src/Pages/Signin"
 import {Context} from '../../src/context/Context';
 import {useState, useMemo} from "react"
 import Routelar from "../Routelar";
-
+import NoPage from "./NoPage";
  export default function RoutesAuto (){
 
 
@@ -19,16 +19,13 @@ import Routelar from "../Routelar";
 
 
         <Routes>
-            {Routelar.map((el, i)=>{
-                {
-                    console.log(el);
-                }
-               return <Route key={i} path={el.path} element={ value?.user?.kullaniciAdi?el.component: <Navigate to="/signin" replace={true} />}            />
 
+            {Routelar.map((el, i)=>{
+               return <Route exact  key={i} path={el.path} element={ value?.user?.kullaniciAdi?el.component: <Navigate to="/signin" replace={true} />}            />
             })
             }
-            {/*<Route path="*" element={ value?.user?.kullaniciAdi?<Home/>: <Navigate to="/signin" replace={true} />}            />*/}
 
+            <Route  path="*" element={<NoPage />}/>
 
         </Routes>
 

@@ -16,7 +16,7 @@ import {useNavigate} from "react-router-dom";
 const Signup = () => {
     const {enqueueSnackbar} = useSnackbar();
 
-    const paperStyle = {padding: 20, width: "100vw", margin: "0 auto"}
+    const paperStyle = {padding: 20, width: "300px", margin: "0 auto"}
     const headerStyle = {margin: 0}
     const avatarStyle = {backgroundColor: '#1bbd7e'}
 
@@ -28,13 +28,7 @@ const Signup = () => {
     const [validation, setValidation] = useState({})
     let navigate = useNavigate();
 
-
-    const handleClickVariant = (variant) => () => {
-        // variant could be success, error, warning, info, or default
-        enqueueSnackbar('This is a success message!', {variant});
-    };
     const fetchData = async () => {
-
         axios.post("http://localhost:8088/users/ekle", {
             kullaniciAdi: name, password: password, role: role, email: email,
 
@@ -44,12 +38,9 @@ const Signup = () => {
                 enqueueSnackbar("Hesabınız başarıyla oluşturuldu.")
             }).catch((e) => {
             enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz.")
-
         });
-
-
     };
-    return (<Grid>
+    return (<Grid style={ {marginTop:"25px"} } >
         <Paper style={paperStyle}>
             <Grid align='center'>
                 <Avatar style={avatarStyle}>

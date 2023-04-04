@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
  import { trTR
         as coreBgBG } from '@material-ui/core/locale';
 import { SnackbarProvider, useSnackbar } from 'notistack';
+import NoPage from "./Pages/NoPage";
 
 const darkTheme = createTheme(
     {
@@ -68,10 +69,10 @@ const App = () => {
     },[user,mode])
 
 
+    console.log(user);
 
 
-
-     return (<>
+    return (<>
          <SnackbarProvider>
 
          <ThemeProvider theme={selectedTheme}>
@@ -79,13 +80,10 @@ const App = () => {
         <Context.Provider value={value} >
 
                         <Routes>
-
-                            <Route path="/signup" element={user?.kullaniciAdi ?  <Navigate to="/home" replace={true} />:<Signup/>}/>
-                            <Route path="/signin" element={user?.kullaniciAdi ?<Navigate to="/home" replace={true} />:<Signin/>}/>
-
-                            <Route path="*" element={user?.kullaniciAdi ?<RoutesAuto/>:<Navigate to="/signin" replace={true} />}/>
-
-
+                            <Route exact path="/signup" element={user?.kullaniciAdi ?  <Navigate to="/home"   />:<Signup/>}/>
+                             <Route exact path="/signin"  element={user?.kullaniciAdi ?<Navigate to="/home"  />:<Signin/>}/>
+                            <Route  path="/" element={user?.kullaniciAdi ?<RoutesAuto/>:<Navigate to="/signin"  />}/>
+                            <Route  path="*" element={user?.kullaniciAdi ?<RoutesAuto/>:<NoPage />}/>
                         </Routes>
 
             </Context.Provider>

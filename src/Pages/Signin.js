@@ -51,8 +51,7 @@ const Signin = ({}) => {
 
 
     };
-    console.log(value.user);
-    return (<Grid>
+     return (<Grid  style={ {marginTop:"25px"} }>
         <Paper style={paperStyle}>
             <Grid align='center'>
                 <Avatar style={avatarStyle}><LockOutlinedIcon/>

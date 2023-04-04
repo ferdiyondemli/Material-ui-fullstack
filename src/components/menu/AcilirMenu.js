@@ -19,7 +19,7 @@ import {Navigate, useNavigate,Link} from "react-router-dom";
  import {Context} from '../../context/Context';
 import Avatar from '@material-ui/core/Avatar';
 import {deepOrange, deepPurple} from '@material-ui/core/colors';
-import {Switch} from '@material-ui/core';
+import {Switch, withMobileDialog} from '@material-ui/core';
 
 const drawerWidth = 240;
 import MenuUi from '@material-ui/core/Menu';
@@ -110,10 +110,10 @@ export default function AcilirMenu({children}) {
                     Yalo Baba
                 </Typography>
                 <Switch color={"info"} onChange={() => value.setMode(value.mode === "light" ? "dark" : "light")} />
-
+                {console.log(value.user.kullaniciAdi)}
                 <Avatar style={{backgroundColor: "grey", position: "absolute", right: "50px"}}
-                        aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}
-                >{value.user.kullaniciAdi.charAt(0).toUpperCase()}</Avatar>
+                     onClick={handleClick}
+                >{value?.user?.kullaniciAdi?.toString().charAt(0).toUpperCase()}</Avatar>
                 <MenuUi
                     id="simple-menu"
                     anchorEl={anchorEl}
@@ -132,7 +132,7 @@ export default function AcilirMenu({children}) {
                     <MenuItem onClick={() => {
                         handleClose()
                         value.setUser({})
-                        navigate("/home");
+                        navigate("/signin");
                         enqueueSnackbar("Çıkış yapıldı.")
                     }}>Çıkış yap</MenuItem>
                 </MenuUi>
