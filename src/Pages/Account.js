@@ -75,7 +75,7 @@ const Home = () => {
                 <h3>Kullanıcı Bilgileri</h3>
                 <FormControlLabel
                     control={<Switch color={"primary"} onChange={() => setGenelGuncelle(prevState => !prevState)}/>}
-                    label={ "Bilgileri güncelle"}/>
+                    label={"Bilgileri güncelle"}/>
                 <FormControlLabel control={<Checkbox color={"primary"}
                                                      onChange={() => setPasswordGuncelle(prevState => !prevState)}/>}
                                   label={"Şifre güncelle"}/>
@@ -86,7 +86,7 @@ const Home = () => {
                         <Grid item xs={6}>
 
                             <TextField fullWidth variant="outlined"
-                                        value={name}
+                                       value={name}
                                        disabled={genelGuncelle}
                                        onChange={(event) => {
                                            if (event.target.value.length < 5) {
@@ -231,7 +231,24 @@ const Home = () => {
                             />
                         </Grid>
                     </Grid>
-                    <Tooltip title="Güncellemek içn mevcut şifrenizi giriniz." arrow>
+                    {mevcutPassword? <div>
+
+
+                        {!genelGuncelle && <Button style={{marginTop: "10px"}}
+                                                   variant='contained' color='primary' fullWidth
+
+                                                   onClick={() => {
+
+                                                       fetchData()
+
+                                                   }
+
+                                                   }
+                                                   disabled={(!name || !mevcutPassword) || Object.keys(validation).length > 0}
+                        >
+                            Güncelle
+                        </Button>}
+                    </div>:<Tooltip title="Güncellemek içn mevcut şifrenizi giriniz." arrow>
                         <div>
 
 
@@ -250,12 +267,12 @@ const Home = () => {
                                 Güncelle
                             </Button>}
                         </div>
-                    </Tooltip>
+                    </Tooltip>}
 
 
                 </form>
 
-                {!genelGuncelle &&Object.keys(validation).length > 0 && <Alert variant="outlined" severity="error">
+                {!genelGuncelle && Object.keys(validation).length > 0 && <Alert variant="outlined" severity="error">
                     {
 
                         Object.keys(validation).length > 0 && Object.keys(validation).map((el, i) => {
