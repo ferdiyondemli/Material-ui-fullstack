@@ -213,7 +213,8 @@ const Home = () => {
                                     }
 
                                     }
-                                    disabled={(!name || !mevcutPassword) || Object.keys(validation).length > 0}>
+                              //      disabled={(!name || !mevcutPassword) || Object.keys(validation).length > 0}
+                            >
                                 Güncelle
                             </Button>
                         </div>

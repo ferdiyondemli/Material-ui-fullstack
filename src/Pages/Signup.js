@@ -37,6 +37,9 @@ const Signup = () => {
                 navigate("/signin");
                 enqueueSnackbar("Hesabınız başarıyla oluşturuldu.")
             }).catch((e) => {
+            typeof e?.response?.data === 'string' &&  setValidation({
+                ...validation, giris: e?.response?.data
+            })
             enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz.")
         });
     };
@@ -53,6 +56,8 @@ const Signup = () => {
                 <TextField fullWidth label='Kullanıcı Adı' placeholder="Kullanıcı adı giriniz."
                            value={name}
                            onChange={(event) => {
+                               delete validation.giris
+
                                if (event.target.value.length < 5) {
                                    setName(event.target.value);
                                    setValidation({
@@ -67,6 +72,8 @@ const Signup = () => {
                 <TextField fullWidth label='E-mail adresi' placeholder="Mail adresi giriniz."
                            value={email}
                            onChange={(event) => {
+                               delete validation.giris
+
                                if ( !validateEmail(event.target.value)) {                                   setEmail(event.target.value);
                                    setValidation({
                                        ...validation, email: "E-mail: Geçerli bir e-mail adresi giriniz!"
@@ -85,6 +92,8 @@ const Signup = () => {
                         value={role}
                         label="Role Seçiniz"
                         onChange={(event) => {
+                            delete validation.giris
+
                             console.log(event.target.value);
                             if (!event.target.value) {
                                 setRole(event.target.value);
@@ -107,6 +116,8 @@ const Signup = () => {
                            type={"password"}
 
                            onChange={(event) => {
+                               delete validation.giris
+
                                if (event.target.value.length < 5) {
                                    setPassword(event.target.value);
                                    setValidation({
@@ -132,6 +143,8 @@ const Signup = () => {
                            type={"password"}
 
                            onChange={(event) => {
+                               delete validation.giris
+
                                if (event.target.value.length < 5) {
                                    setPassword2(event.target.value);
                                    setValidation({

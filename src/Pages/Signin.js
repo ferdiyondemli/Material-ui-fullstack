@@ -15,13 +15,14 @@ import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/Alert';
 import {useNavigate} from "react-router-dom";
 import {useSnackbar} from "notistack";
+import {validateEmail} from "../Utils";
 
 const Signin = ({}) => {
     const navigate = useNavigate();
     const {enqueueSnackbar} = useSnackbar();
 
     const value = useContext(Context);
-    const paperStyle = {padding: 20, height: '53vh', width: 300, margin: "0 auto"}
+    const paperStyle = {padding: 20, height: '65vh', width: 300, margin: "0 auto"}
     const avatarStyle = {backgroundColor: '#1bbd7e'}
     const btnstyle = {marginTop: '8px'}
     const [email, setEmail] = React.useState('');
@@ -34,7 +35,6 @@ const Signin = ({}) => {
         axios.post("http://localhost:8088/users/giris", {
             email: email, password: password
         }).then((response) => {
-            console.log(response);
             if (response?.data) {
                 value.setUser(response.data)
                 navigate("/home");
@@ -43,8 +43,11 @@ const Signin = ({}) => {
                 enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz. ")
             }
         }).catch((e) => {
+
+            typeof e?.response?.data === 'string' &&  setValidation({
+                ...validation, giris: e?.response?.data
+            })
             console.log(e)
-            console.trace()
             enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz. ")
 
         });
@@ -63,9 +66,10 @@ const Signin = ({}) => {
                        required
                        value={email}
                        onChange={(event) => {
-                           if (event.target.value.length < 4) {
+                           delete validation.giris
+                           if (!validateEmail(event.target.value)) {
                                setValidation({
-                                   ...validation, email: "email: Geçerli bir email adresi giriniz!"
+                                   ...validation, email: "Email: Geçerli bir email adresi giriniz!"
                                })
                                setEmail(event.target.value);
 
@@ -73,6 +77,7 @@ const Signin = ({}) => {
                                delete validation.email
                                setEmail(event.target.value);
                            }
+
 
 
                        }}/>
@@ -83,6 +88,8 @@ const Signin = ({}) => {
                        type={"password"}
 
                        onChange={(event) => {
+                           delete validation.giris
+
                            if (event.target.value.length < 3) {
                                setValidation({
                                    ...validation, sifre: "Şifre: Geçerli bir şifre giriniz!"
@@ -107,7 +114,8 @@ const Signin = ({}) => {
             }}
 
                     style={{textTransform: "none", marginTop: "10px"}}
-                    disabled={Object.keys(validation).length > 0 || !email || !password}>GİRİŞ YAP</Button>
+                 disabled={Object.keys(validation).length > 0 || !email || !password}
+            >GİRİŞ YAP</Button>
             <Typography style={{marginTop: "10px"}}>
                 <Link href="/forgotpassword">
                     Şifremi unuttum.
@@ -122,8 +130,7 @@ const Signin = ({}) => {
                 {
 
                     Object.keys(validation).length > 0 && Object.keys(validation).map((el, i) => {
-                        console.log(validation);
-                        return <div key={i}>{validation[el]}</div>
+                         return <div key={i}>{validation[el]}</div>
                     })
 
                 }
