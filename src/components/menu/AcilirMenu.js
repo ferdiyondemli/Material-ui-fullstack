@@ -25,8 +25,10 @@ const drawerWidth = 240;
 import MenuUi from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {useSnackbar} from "notistack";
-
-const useStyles = makeStyles((theme) => ({
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SettingsIcon from '@material-ui/icons/Settings';
+  const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     }, appBar: {
@@ -109,9 +111,9 @@ export default function AcilirMenu({children}) {
                 <Typography variant="h6" noWrap>
                     Yalo Baba
                 </Typography>
+
                 <Switch color={"info"} onChange={() => value.setMode(value.mode === "light" ? "dark" : "light")} />
-                {console.log(value.user.kullaniciAdi)}
-                <Avatar style={{backgroundColor: "grey", position: "absolute", right: "50px"}}
+                 <Avatar style={{backgroundColor: "grey", position: "absolute", right: "50px"}}
                      onClick={handleClick}
                 >{value?.user?.kullaniciAdi?.toString().charAt(0).toUpperCase()}</Avatar>
                 <MenuUi
@@ -124,17 +126,20 @@ export default function AcilirMenu({children}) {
                     <MenuItem onClick={() => {
                         handleClose()
                         navigate("/account");
-                    }}>Hesabım</MenuItem>
+                    }}> <AccountCircleIcon  style={{minWidth: '30px'}}/>Hesabım</MenuItem>
                     <MenuItem onClick={() => {
                         handleClose()
                         navigate("/settings");
-                    }}>Ayarlar</MenuItem>
+                    }}> <SettingsIcon  style={{minWidth: '30px'}}/>
+                        Ayarlar</MenuItem>
                     <MenuItem onClick={() => {
                         handleClose()
                         value.setUser({})
                         navigate("/signin");
                         enqueueSnackbar("Çıkış yapıldı.")
-                    }}>Çıkış yap</MenuItem>
+                    }}>              <ExitToAppIcon  style={{minWidth: '30px'}}/>
+
+                        Çıkış yap</MenuItem>
                 </MenuUi>
             </Toolbar>
         </AppBar>
@@ -169,7 +174,7 @@ export default function AcilirMenu({children}) {
                                                 hidden={!(value.user.role === "admin") && !(value.user.role === el.role)}
                                                 to={el.path}
                                                 key={index}> <ListItem button key={index} href="/sd">
-                    <i className={el.icon}></i>
+                    <i style={{minWidth: '15px'}} className={el.icon}></i>
                   <ListItemText  primary={el.label}/>
                 </ListItem>
                 </Link>))}

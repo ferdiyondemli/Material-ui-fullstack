@@ -10,6 +10,7 @@ const Home = () => {
     let navigate = useNavigate();
     const value = useContext(Context);
     return <>
+
         Hoşgeldin {value?.user.kullaniciAdi}
     </>
 }

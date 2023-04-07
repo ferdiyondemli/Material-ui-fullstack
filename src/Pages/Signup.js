@@ -37,13 +37,13 @@ const Signup = () => {
                 navigate("/signin");
                 enqueueSnackbar("Hesabınız başarıyla oluşturuldu.")
             }).catch((e) => {
-            typeof e?.response?.data === 'string' &&  setValidation({
+            typeof e?.response?.data === 'string' && setValidation({
                 ...validation, giris: e?.response?.data
             })
             enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz.")
         });
     };
-    return (<Grid style={ {marginTop:"25px"} } >
+    return (<Grid style={{marginTop: "25px"}}>
         <Paper style={paperStyle}>
             <Grid align='center'>
                 <Avatar style={avatarStyle}>
@@ -74,7 +74,8 @@ const Signup = () => {
                            onChange={(event) => {
                                delete validation.giris
 
-                               if ( !validateEmail(event.target.value)) {                                   setEmail(event.target.value);
+                               if (!validateEmail(event.target.value)) {
+                                   setEmail(event.target.value);
                                    setValidation({
                                        ...validation, email: "E-mail: Geçerli bir e-mail adresi giriniz!"
                                    })
@@ -178,9 +179,7 @@ const Signup = () => {
                 <Button style={{marginTop: "10px"}}
                         variant='contained' color='primary' fullWidth
                         onClick={() => {
-
                             fetchData()
-
                         }
 
                         }
@@ -194,12 +193,9 @@ const Signup = () => {
 
             </form>
             {Object.keys(validation).length > 0 && <Alert variant="outlined" severity="error">
-                {
-
-                    Object.keys(validation).length > 0 && Object.keys(validation).map((el, i) => {
-
-                        return <div key={i}>{validation[el]}</div>
-                    })
+                {Object.keys(validation).length > 0 && Object.keys(validation).map((el, i) => {
+                    return <div key={i}>{validation[el]}</div>
+                })
 
                 }
             </Alert>}

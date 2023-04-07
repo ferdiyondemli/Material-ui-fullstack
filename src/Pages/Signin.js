@@ -47,7 +47,6 @@ const Signin = ({}) => {
             typeof e?.response?.data === 'string' &&  setValidation({
                 ...validation, giris: e?.response?.data
             })
-            console.log(e)
             enqueueSnackbar("Bir hata oluştu! Tekrar deneyiniz. ")
 
         });
