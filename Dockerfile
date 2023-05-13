@@ -19,4 +19,4 @@ COPY . .
 CMD npm start
 
 #docker build --rm -f Dockerfile -t frontend:latest .
-#docker run -p 3007:3000  frontend -d
+#docker run -p 3000:3000  frontend -d
